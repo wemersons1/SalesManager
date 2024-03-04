@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests\Sale;
 
-use App\Http\Requests\FaleidValidationTrait;
+use App\Http\Requests\FailedValidationTrait;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSaleRequest extends FormRequest
 {
-    use FaleidValidationTrait;
+    use FailedValidationTrait;
     /**
      * Get the validation rules that apply to the request.
      *

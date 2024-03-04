@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Symfony\Component\HttpFoundation\Response;
 
-trait FaleidValidationTrait
+trait FailedValidationTrait
 {
     /**
      * Determine if the user is authorized to make this request.

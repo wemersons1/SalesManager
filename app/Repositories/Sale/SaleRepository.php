@@ -5,7 +5,6 @@ namespace App\Repositories\Sale;
 use App\Enums\SaleStatusEnum;
 use App\Models\Sale;
 use App\Repositories\SaleProduct\SaleProductRepositoryInterface;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 
 class SaleRepository implements SaleRepositoryInterface {    
@@ -14,7 +13,7 @@ class SaleRepository implements SaleRepositoryInterface {
     {
 
     }
-    public function createSale($data): Sale
+    public function createSale($data)
     {
         DB::beginTransaction();
         try {
@@ -34,19 +33,25 @@ class SaleRepository implements SaleRepositoryInterface {
         }
         DB::commit();
 
-        return $saleWithAmountCalculated->load(['products']);
+        return $saleWithAmountCalculated->load(['products' => function($query) {
+                    $query->select('products.*', 'sale_products.amount', 'sale_products.price');
+                }]);
     }
-    public function getAllSales(): Collection
+    public function getAllSales()
     {  
-        return Sale::with(['products'])
+        return Sale::with(['products' => function($query) {
+                        $query->select('products.*', 'sale_products.amount', 'sale_products.price');
+                    }])
                 ->get();
     }
-    public function getSaleById($saleId): Sale
+    public function getSaleById($saleId)
     {
-        return Sale::with(['products'])
+        return Sale::with(['products' => function($query) {
+                            $query->select('products.*', 'sale_products.amount', 'sale_products.price');
+                    }])
                 ->findOrFail($saleId);
     }
-    public function cancelSaleById($saleId): Sale
+    public function cancelSaleById($saleId)
     {
         $sale = Sale::findOrFail($saleId);
         $sale->status_id = SaleStatusEnum::CANCELED->value;
@@ -55,7 +60,7 @@ class SaleRepository implements SaleRepositoryInterface {
         return $sale->load('status')
                         ->refresh();
     }
-    public function updateSale($saleId, $data): Sale
+    public function updateSale($saleId, $data)
     {
         DB::beginTransaction();
         try {
@@ -68,13 +73,12 @@ class SaleRepository implements SaleRepositoryInterface {
             $saleWithAmountCalculated = $this->getSaleWithAmountCalculated($sale);
         } catch(\Exception $e) {
             DB::rollBack();
-            return response()->json([
-                "message" => $e->getMessage()
-            ], 500);
+            throw $e;
         }
         DB::commit();
         
-        return $saleWithAmountCalculated->load(['products'])
-                                    ->refresh();
+        return $saleWithAmountCalculated->load(['products' => function($query) {
+                    $query->select('products.*', 'sale_products.amount', 'sale_products.price');
+                }]);
     }
 }

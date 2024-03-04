@@ -4,7 +4,7 @@ namespace App\Services\Sale;
 
 use App\Repositories\Sale\SaleRepositoryInterface;
 
-class SaleService implements SaleServiceInterface{
+class SaleService{
     public function __construct(protected SaleRepositoryInterface $saleRepository)
     {
 

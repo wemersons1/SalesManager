@@ -13,7 +13,7 @@ class Sale extends Model
     protected $primaryKey = 'sale_id';
     protected $fillable = [
         'amount',
-        'status_id'
+        'status_id',
     ];
 
     protected $hidden = [
@@ -24,7 +24,8 @@ class Sale extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'sale_products', 'sale_id', 'product_id');
+        return $this->belongsToMany(Product::class, 'sale_products', 'sale_id', 'product_id')
+        ->withPivot('amount');
     }
 
     public function status(): HasOne 

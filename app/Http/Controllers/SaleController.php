@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Sale\StoreSaleRequest;
 use App\Http\Requests\Sale\UpdateSaleRequest;
-use App\Services\Sale\SaleServiceInterface;
+use App\Models\Sale;
+use App\Services\Sale\SaleService;
 
 class SaleController extends Controller
 {
-    public function __construct(protected SaleServiceInterface $saleService)
+    public function __construct(protected SaleService $saleService)
     {
 
     }
@@ -40,17 +41,17 @@ class SaleController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSaleRequest $request, int $id)
+    public function update(UpdateSaleRequest $request, Sale $sale)
     {
         $data = $request->validated();
-        return $this->saleService->updateSale($id, $data);
+        return $this->saleService->updateSale($sale->sale_id, $data);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id)
+    public function destroy(Sale $sale)
     {
-        return $this->saleService->cancelSaleById($id);
+        return $this->saleService->cancelSaleById($sale->sale_id);
     }
 }
