@@ -21,4 +21,5 @@ Resumindo:
 - Instale o software necessário
 - `composer install`
 - `sail up`
-- `php artisan migrate:fresh --seed`
+- `sail artisan migrate:fresh --seed`
+- `access in http://localhost`
