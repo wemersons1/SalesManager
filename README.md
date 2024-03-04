@@ -23,3 +23,6 @@ Resumindo:
 - `sail up`
 - `sail artisan migrate:fresh --seed`
 - `access in http://localhost`
+
+## Documentação API
+https://www.postman.com/analizzeisp/workspace/salesmanager
