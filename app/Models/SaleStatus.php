@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class SaleStatus extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'product_id';
-    protected $fillable = ['description'];
+    protected $fillable = [
+        'id',
+        'name'
+    ];
     protected $hidden = [
         'created_at',
-        'updated_at',
-        'pivot',
-        'description'
+        'updated_at'
     ];
 }
