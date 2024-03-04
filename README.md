@@ -21,3 +21,4 @@ Resumindo:
 - Instale o software necessário
 - `composer install`
 - `sail up`
+- `php artisan migrate:fresh --seed`
